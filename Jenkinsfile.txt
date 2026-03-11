@@ -1,0 +1,48 @@
+// ==========================================
+// Jenkinsfile
+// Created by : Dhruva Bamb
+// Description: Jenkins Pipeline Project
+// ==========================================
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the Project...'
+                sh './Build.sh'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running Unit Test Cases...'
+                sh './Test.sh'
+            }
+        }
+
+        stage('Quality') {
+            steps {
+                echo 'Quality Gate Check...'
+                sh './Quality.sh'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying Build...'
+                sh './Deploy.sh'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Please check the logs.'
+        }
+    }
+}
